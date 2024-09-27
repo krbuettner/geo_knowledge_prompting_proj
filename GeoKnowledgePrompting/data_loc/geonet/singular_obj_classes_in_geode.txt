@@ -1,0 +1,40 @@
+a,backyard
+a,bag
+a,bicycle
+a,boat
+a,bus
+a,candle
+a,car
+a,chair
+cleaning equipment
+a,cooking pot
+a,dog
+a,dustbin
+a,fence
+a,flag
+a,front door
+a,hairbrush/comb
+hand soap
+a,hat
+a,house
+a,jug
+a,light fixture
+a,light switch
+a,lighter
+medicine
+a,monument
+a,plate of food
+a,religious building
+a,road sign
+spices
+a,stall
+a,storefront
+a,stove
+a,streetlight/lantern
+a,toothbrush
+toothpaste/toothpowder
+a,toy
+a,tree
+a,truck
+a,waste container
+a,wheelbarrow

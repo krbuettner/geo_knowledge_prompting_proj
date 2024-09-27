@@ -1,0 +1,95 @@
+an,alarm clock
+an,alcoholic drink
+an,arm watch
+an,armchair
+a,back of a hand
+a,bed
+a,bike
+a,book
+a,bowl/plate
+car keys
+a,car
+a,cow
+a,chicken
+cigarettes
+cleaning equipment
+clothes
+a,computer
+contraceptives
+cooking pots
+cooking utensils
+cosmetics
+a,couch
+a,cup/mug/glass
+cutlery
+diapers (or baby-pants)
+a,dish rack
+a,dish washing brush/cloth
+dish washing soap
+a,dishwasher
+earrings
+a,family snapshot
+a,freezer
+a,front door
+frontdoor keys
+a,frontdoor lock
+fruit trees
+fruits/vegetables
+glasses/lenses
+a,goat
+grains
+a,hair brush/comb
+a,home
+an,instrument
+jewelry
+a,kitchen sink
+a,light source
+makeup
+meat/fish
+medication
+menstruation pads/tampax
+a,moped/motorcycle
+mosquito protections
+music equipment
+a,necklace
+an,oven
+a,palm of a hand
+paper
+a,pen/pencil
+pet food
+a,pet
+a,phone
+piercings
+a,power outlet
+a,radio
+a,refrigerator
+a,roof
+a,rug
+salt
+shampoo
+shoes
+a,shower
+snacks
+soap for hands and body
+a,social drink
+spices
+a,stove/hob
+a,table with food
+tattoos
+teeth
+toilet paper
+a,toilet
+tools
+a,toothbrush
+toothpaste
+a,toy
+trash/waste
+a,tv
+a,wall clock
+a,wall decoration
+a,wardrobe
+washing detergent
+a,waste dump
+a,water outlet/drain
+a,wedding photo
+a,wheelbarrow

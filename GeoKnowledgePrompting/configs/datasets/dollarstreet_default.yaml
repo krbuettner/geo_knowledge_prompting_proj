@@ -1,0 +1,27 @@
+# Dataset information with DollarStreet
+DATASET:
+    NAME: "DollarStreet"
+    TRAIN_SPLIT: "eu_train"
+    TEST_SPLIT: "eu_test"
+
+# What type of prompt to use 
+PROMPT:
+
+  # Key parameters
+  # The top ones are set to False b/c this is testing
+  USE_LLM_DESC: False                          # Should we add LLM descriptors to prompt? 
+  USE_COUNTRY_NAME: False                      # Should we add country name to prompt?
+  USE_COUNTRY_ENSEMBLE: False                  # For prompts, should we ensemble over country names
+  USE_AVG_LLM_AND_COUNTRY_NAME: False         # If using LLM desc, should we avg(LLM, country name) or combine?
+  SINGLE_COUNTRY_NAME_OF_INTEREST: "Japan"  # If not using ensemble, which country name to use 
+
+  # Which LLM descriptors should be used? 
+  ROOT_PATH_TO_LLM_DESC: '/ihome/akovashka/krb115/projects/geo_knowledge_prompting_proj/GeoKnowledgePrompting/data_files/clean_'
+  LLM_FILE_NAME: '2023_05_13_country_simple_batched_text_davinci_003_dictionary_dollarstreet_classes_to_gpt_textual_descriptions.pkl'
+  
+  # List of countries to ensemble over if using overall country regualrization
+  PATH_TO_COUNTRY_LIST_FOR_ENSEMBLE: None
+
+# When testing, should the per-class result be printed? 
+TEST:
+  PER_CLASS_RESULT: True
