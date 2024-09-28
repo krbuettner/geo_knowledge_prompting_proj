@@ -415,7 +415,7 @@ class CustomCLIP(nn.Module):
 
 
 @TRAINER_REGISTRY.register()
-class GeoKgCoOp(TrainerX):
+class GeoKnowledgePrompting(TrainerX):
 
 	def check_cfg(self, cfg):
 		assert cfg.TRAINER.COOP.PREC in ["fp16", "fp32", "amp"]
