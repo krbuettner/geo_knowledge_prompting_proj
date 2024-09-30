@@ -45,7 +45,7 @@ To evaluate, run in the following format with training dataset as first arg, tes
 bash all_test_vit_geoknowledgeprompting.sh tgt_llm_and_in_country_ensemble_dollarstreet full_tgt_dollarstreet 4.0
 ```
 
-Some helper parse code is in ```GeoKnowledgePrompting/notebooksAnalyzeResultsKgCoOp.ipynb```. 
+Some helper parse code is in ```GeoKnowledgePrompting/notebooks/AnalyzeResultsKgCoOp.ipynb```. 
 
 ## Citation
 If you use our work, please consider citing:
