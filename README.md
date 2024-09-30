@@ -8,11 +8,33 @@
 
 ![main figure](method.png)
 
+## Env setup
+
+Follow the instructions in GeoKnowledgePrompting to create a conda environment/build relevant code. 
+
+## Data processing
+
+Please download the DollarStreet Kaggle dataset from [here](https://www.kaggle.com/datasets/mlcommons/the-dollar-street-dataset)
+
+We filter the dataset to be only single object recognition. Follow notebooks/PreprocessDollarStreet.ipynb to generate a preprocessed version of the filtered dataset. 
+
+Add a symbolic link in GeoKnowledgePrompting to location of the preprocessed dataset.
+```
+ln -s <PREPROC_IMAGES_PATH> dollarstreet_data
+```
 ## Running code
 
-CODE STILL IN PROGRESS, REPO NOT COMPLETE
+Navigate to scripts for executable scripts to run training. For example:
 
-Method code is uploaded, but need to add dataset creation code (TO COME SOON)
+```
+bash all_train_vitb16_geoknowledgeprompting.sh tgt_llm_and_in_country_ensemble_dollarstreet 4.0
+```
+
+We provide example bash scripts for multiple experimental trials (EX: train_method_run_vit.sh). 
+
+## Eval
+
+TO COME SOON 
 
 ## Citation
 If you use our work, please consider citing:
