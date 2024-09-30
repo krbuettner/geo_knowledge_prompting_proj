@@ -10,20 +10,20 @@
 
 ## Env setup
 
-Follow the instructions in GeoKnowledgePrompting to create a conda environment/build relevant code. 
+Follow the instructions in ```GeoKnowledgePrompting``` to create a conda environment/build relevant code. 
 
 ## Data processing
 
 Please download the DollarStreet Kaggle dataset from [here](https://www.kaggle.com/datasets/mlcommons/the-dollar-street-dataset)
 
-We filter the dataset to be only single object recognition. Follow notebooks/PreprocessDollarStreet.ipynb to generate a preprocessed version of the filtered dataset. 
+We filter the dataset to be only single object recognition. Follow ```GeoKnowledgePrompting/notebooks/PreprocessDollarStreet.ipynb``` to generate a preprocessed version of the filtered dataset. 
 
-Add a symbolic link in GeoKnowledgePrompting to location of the preprocessed dataset.
+Add a symbolic link in ```GeoKnowledgePrompting``` to location of the preprocessed dataset.
 ```
 ln -s <PREPROC_IMAGES_PATH> dollarstreet_data
 ```
 
-(GPT-3) LLM descriptors of testing are in /ihome/akovashka/krb115/projects/geo_knowledge_prompting_proj/GeoKnowledgePrompting/data_files
+(GPT-3) LLM descriptors of use are in ```GeoKnowledgePrompting/data_files```
 
 We encourage future work that evaluates more modern LLMs with respect to robustness and representativeness. 
 
@@ -45,7 +45,7 @@ To evaluate, run in the following format with training dataset as first arg, tes
 bash all_test_vit_geoknowledgeprompting.sh tgt_llm_and_in_country_ensemble_dollarstreet full_tgt_dollarstreet 4.0
 ```
 
-Some helper parse code is in AnalyzeResultsKgCoOp.ipynb. 
+Some helper parse code is in ```GeoKnowledgePrompting/notebooksAnalyzeResultsKgCoOp.ipynb```. 
 
 ## Citation
 If you use our work, please consider citing:
