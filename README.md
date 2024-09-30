@@ -22,6 +22,11 @@ Add a symbolic link in GeoKnowledgePrompting to location of the preprocessed dat
 ```
 ln -s <PREPROC_IMAGES_PATH> dollarstreet_data
 ```
+
+(GPT-3) LLM descriptors of testing are in /ihome/akovashka/krb115/projects/geo_knowledge_prompting_proj/GeoKnowledgePrompting/data_files
+
+We encourage future work that evaluates more modern LLMs with respect to robustness and representativeness. 
+
 ## Running code
 
 Navigate to scripts for executable scripts to run training. For example:
@@ -34,7 +39,13 @@ We provide example bash scripts for multiple experimental trials (EX: train_meth
 
 ## Eval
 
-TO COME SOON 
+To evaluate, run in the following format with training dataset as first arg, test dataset as second arg, and reg weight as third arg. 
+
+```
+bash all_test_vit_geoknowledgeprompting.sh tgt_llm_and_in_country_ensemble_dollarstreet full_tgt_dollarstreet 4.0
+```
+
+Some helper parse code is in AnalyzeResultsKgCoOp.ipynb. 
 
 ## Citation
 If you use our work, please consider citing:
