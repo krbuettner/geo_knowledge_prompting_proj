@@ -13,7 +13,7 @@ PROMPT:
   USE_COUNTRY_NAME: False                      # Should we add country name to prompt?
   USE_COUNTRY_ENSEMBLE: False                  # For prompts, should we ensemble over country names
   USE_AVG_LLM_AND_COUNTRY_NAME: False         # If using LLM desc, should we avg(LLM, country name) or combine?
-  SINGLE_COUNTRY_NAME_OF_INTEREST: "Japan"  # If not using ensemble, which country name to use 
+  SINGLE_COUNTRY_NAME_OF_INTEREST: "China"  # If not using ensemble, which country name to use 
 
   # Which LLM descriptors should be used? 
   ROOT_PATH_TO_LLM_DESC: '/ihome/akovashka/krb115/projects/geo_knowledge_prompting_proj/GeoKnowledgePrompting/data_files/clean_'

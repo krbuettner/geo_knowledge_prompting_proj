@@ -1,5 +1,4 @@
-# Script for Country Knowledge Prompting 
-
+# Script for Geo Knowledge Prompting 
 
 from clip import clip
 from clip.simple_tokenizer import SimpleTokenizer as _Tokenizer
@@ -126,14 +125,12 @@ class PromptLearner(nn.Module):
 		classnames = [name.replace("_", " ") for name in classnames]
 		name_lens = [len(_tokenizer.encode(name)) for name in classnames]
 		prompts = [prompt_prefix + " " + name + "." for name in classnames]
-		#print('Name lens: ' + str(name_lens))
 
-		#print(f"Loading CLIP (backbone: {cfg.MODEL.BACKBONE.NAME})")
 		clip_model_ = load_clip_to_cpu(cfg)
 		clip_model_.cuda()
 
 		#####################################################################################################
-		# Custom Country Knowledge Prompting Features 
+		# Custom Geo Knowledge Prompting Features 
 		
 		# Text feature general for default prompts  
 		print('Generating default text features...')      
@@ -378,22 +375,15 @@ class CustomCLIP(nn.Module):
 			score_avg_in_c_and_llm_c = 1.0 - torch.mean(score_avg_in_c_and_llm_c)
 
 		if self.use_llm:
-			print("In country: " + str(self.use_country_name))
+			print("Using in country name: " + str(self.use_country_name))
 			if self.use_country_ensemble:
 				print("LLM Country Ensemble")
 				avg_llm_country_old = self.country_ensemble_llm_features
 				avg_llm_country_old = avg_llm_country_old / avg_llm_country_old.norm(dim=-1, keepdim=True)
 				score_llm = cos(text_features, avg_llm_country_old)
-				print('score llm')
-				print(score_llm.shape)
 				score_llm = 1.0 - torch.mean(score_llm)
-				print('avg_llm_country_old') 
-				print(avg_llm_country_old.shape)
-				print('text features')
-				print(text_features.shape)
-
 			else:
-				print("Country of Interest")
+				print("Country of Interest LLM")
 				country_features_old = self.country_of_interest_llm_features
 				country_features_old = country_features_old / country_features_old.norm(dim=-1, keepdim=True)
 				score_llm = cos(text_features,country_features_old)
@@ -407,7 +397,6 @@ class CustomCLIP(nn.Module):
 		# LLM-only case and LLM-only+incountry
 		elif self.use_llm:
 			print(score_llm)
-			exit()
 			return logits, score_llm
 		# Cases where this is called: default
 		else:
@@ -486,6 +475,7 @@ class GeoKnowledgePrompting(TrainerX):
 			loss = F.cross_entropy(output, label) + self.w*score
 
 			# Print which mode
+			# This is used to ensure model training correctly 
 			if self.model.use_country_ensemble and not self.model.use_llm:
 				print('Using Default Country Ensemble')
 				print(self.w)

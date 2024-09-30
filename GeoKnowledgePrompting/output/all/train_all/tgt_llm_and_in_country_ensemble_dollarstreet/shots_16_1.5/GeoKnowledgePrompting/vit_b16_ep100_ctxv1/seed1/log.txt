@@ -1,0 +1,1668 @@
+***************
+** Arguments **
+***************
+backbone: 
+config_file: configs/trainers/GeoKnowledgePrompting/vit_b16_ep100_ctxv1.yaml
+dataset_config_file: configs/datasets/tgt_llm_and_in_country_ensemble_dollarstreet.yaml
+eval_only: False
+head: 
+load_epoch: None
+model_dir: 
+no_train: False
+opts: ['TRAINER.COOP.N_CTX', '4', 'TRAINER.COOP.CSC', 'False', 'TRAINER.COOP.W', '1.5', 'TRAINER.COOP.CLASS_TOKEN_POSITION', 'end', 'DATASET.NUM_SHOTS', '16', 'DATASET.SUBSAMPLE_CLASSES', 'all']
+output_dir: output/all/train_all/tgt_llm_and_in_country_ensemble_dollarstreet/shots_16_1.5/GeoKnowledgePrompting/vit_b16_ep100_ctxv1/seed1
+resume: 
+root: path_to_data
+seed: 1
+source_domains: None
+target_domains: None
+trainer: GeoKnowledgePrompting
+transforms: None
+************
+** Config **
+************
+DATALOADER:
+  K_TRANSFORMS: 1
+  NUM_WORKERS: 8
+  RETURN_IMG0: False
+  TEST:
+    BATCH_SIZE: 100
+    SAMPLER: SequentialSampler
+  TRAIN_U:
+    BATCH_SIZE: 32
+    N_DOMAIN: 0
+    N_INS: 16
+    SAME_AS_X: True
+    SAMPLER: RandomSampler
+  TRAIN_X:
+    BATCH_SIZE: 128
+    N_DOMAIN: 0
+    N_INS: 16
+    SAMPLER: RandomSampler
+DATASET:
+  ALL_AS_UNLABELED: False
+  CIFAR_C_LEVEL: 1
+  CIFAR_C_TYPE: 
+  NAME: DollarStreet
+  NUM_LABELED: -1
+  NUM_SHOTS: 16
+  ROOT: path_to_data
+  SOURCE_DOMAINS: ()
+  STL10_FOLD: -1
+  SUBSAMPLE_CLASSES: all
+  TARGET_DOMAINS: ()
+  TEST_SPLIT: eu_test
+  TRAIN_SPLIT: eu_train
+  VAL_PERCENT: 0.1
+INPUT:
+  COLORJITTER_B: 0.4
+  COLORJITTER_C: 0.4
+  COLORJITTER_H: 0.1
+  COLORJITTER_S: 0.4
+  CROP_PADDING: 4
+  CUTOUT_LEN: 16
+  CUTOUT_N: 1
+  GB_K: 21
+  GB_P: 0.5
+  GN_MEAN: 0.0
+  GN_STD: 0.15
+  INTERPOLATION: bicubic
+  NO_TRANSFORM: False
+  PIXEL_MEAN: [0.48145466, 0.4578275, 0.40821073]
+  PIXEL_STD: [0.26862954, 0.26130258, 0.27577711]
+  RANDAUGMENT_M: 10
+  RANDAUGMENT_N: 2
+  RGS_P: 0.2
+  SIZE: (224, 224)
+  TRANSFORMS: ('random_resized_crop', 'random_flip', 'normalize')
+LOSS:
+  ALPHA: 0.0
+  GM: False
+  LAMBDA: 1.0
+  NAME: 
+  T: 1.0
+MODEL:
+  BACKBONE:
+    NAME: ViT-B/16
+    PRETRAINED: True
+  HEAD:
+    ACTIVATION: relu
+    BN: True
+    DROPOUT: 0.0
+    HIDDEN_LAYERS: ()
+    NAME: 
+  INIT_WEIGHTS: 
+OPTIM:
+  ADAM_BETA1: 0.9
+  ADAM_BETA2: 0.999
+  BASE_LR_MULT: 0.1
+  GAMMA: 0.1
+  LR: 0.002
+  LR_SCHEDULER: cosine
+  MAX_EPOCH: 100
+  MOMENTUM: 0.9
+  NAME: sgd
+  NEW_LAYERS: ()
+  RMSPROP_ALPHA: 0.99
+  SGD_DAMPNING: 0
+  SGD_NESTEROV: False
+  STAGED_LR: False
+  STEPSIZE: (-1,)
+  WARMUP_CONS_LR: 1e-05
+  WARMUP_EPOCH: 1
+  WARMUP_MIN_LR: 1e-05
+  WARMUP_RECOUNT: True
+  WARMUP_TYPE: constant
+  WEIGHT_DECAY: 0.0005
+OUTPUT_DIR: output/all/train_all/tgt_llm_and_in_country_ensemble_dollarstreet/shots_16_1.5/GeoKnowledgePrompting/vit_b16_ep100_ctxv1/seed1
+PROMPT:
+  ALL_COUNTRY_LIST: []
+  LLM_FILE_NAME: 2023_05_13_country_simple_batched_text_davinci_003_dictionary_dollarstreet_classes_to_gpt_textual_descriptions.pkl
+  PATH_TO_COUNTRY_LIST_FOR_ENSEMBLE: /ihome/akovashka/krb115/projects/geo_knowledge_prompting_proj/GeoKnowledgePrompting/country_lists/dollarstreet_americas_asia_africa.txt
+  ROOT_PATH_TO_LLM_DESC: /ihome/akovashka/krb115/projects/geo_knowledge_prompting_proj/GeoKnowledgePrompting/data_files/clean_
+  SINGLE_COUNTRY_NAME_OF_INTEREST: Japan
+  SOURCE_COUNTRY_LIST: []
+  TARGET_COUNTRY_LIST: []
+  USE_AVG_LLM_AND_COUNTRY_NAME: False
+  USE_COUNTRY_ENSEMBLE: True
+  USE_COUNTRY_NAME: True
+  USE_LLM_DESC: True
+  USE_SRC_TGT_OR_ALL_ENSEMBLE: src
+RESUME: 
+SEED: 1
+TEST:
+  COMPUTE_CMAT: False
+  EVALUATOR: Classification
+  FINAL_MODEL: last_step
+  NO_TEST: False
+  PER_CLASS_RESULT: True
+  SPLIT: test
+TRAIN:
+  CHECKPOINT_FREQ: 0
+  COUNT_ITER: train_x
+  PRINT_FREQ: 5
+TRAINER:
+  CG:
+    ALPHA_D: 0.5
+    ALPHA_F: 0.5
+    EPS_D: 1.0
+    EPS_F: 1.0
+  COCOOP:
+    CTX_INIT: False
+    N_CTX: 16
+    PREC: fp16
+  COOP:
+    ALPHA: 1.0
+    CLASS_TOKEN_POSITION: end
+    CSC: False
+    CTX_INIT: True
+    N_CTX: 4
+    PREC: fp16
+    W: 1.5
+  DAEL:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DDAIG:
+    ALPHA: 0.5
+    CLAMP: False
+    CLAMP_MAX: 1.0
+    CLAMP_MIN: -1.0
+    G_ARCH: 
+    LMDA: 0.3
+    WARMUP: 0
+  ENTMIN:
+    LMDA: 0.001
+  FIXMATCH:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 1.0
+  M3SDA:
+    LMDA: 0.5
+    N_STEP_F: 4
+  MCD:
+    N_STEP_F: 4
+  MEANTEA:
+    EMA_ALPHA: 0.999
+    RAMPUP: 5
+    WEIGHT_U: 1.0
+  MIXMATCH:
+    MIXUP_BETA: 0.75
+    RAMPUP: 20000
+    TEMP: 2.0
+    WEIGHT_U: 100.0
+  MME:
+    LMDA: 0.1
+  NAME: GeoKnowledgePrompting
+  SE:
+    CONF_THRE: 0.95
+    EMA_ALPHA: 0.999
+    RAMPUP: 300
+USE_CUDA: True
+VERBOSE: True
+VERSION: 1
+Collecting env info ...
+** System info **
+PyTorch version: 1.7.1
+Is debug build: False
+CUDA used to build PyTorch: 11.0
+ROCM used to build PyTorch: N/A
+
+OS: Red Hat Enterprise Linux (x86_64)
+GCC version: (GCC) 8.2.0
+Clang version: Could not collect
+CMake version: Could not collect
+
+Python version: 3.7 (64-bit runtime)
+Is CUDA available: True
+CUDA runtime version: Could not collect
+GPU models and configuration: GPU 0: NVIDIA A100-PCIE-40GB
+Nvidia driver version: 550.54.15
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+
+Versions of relevant libraries:
+[pip3] efficientnet-pytorch==0.6.1
+[pip3] numpy==1.21.5
+[pip3] torch==1.7.1
+[pip3] torchsummary==1.5.1
+[pip3] torchvision==0.8.2
+[conda] blas                      1.0                         mkl  
+[conda] cudatoolkit               11.0.221             h6bb024c_0  
+[conda] mkl                       2021.4.0           h06a4308_640  
+[conda] mkl-service               2.4.0            py37h7f8727e_0  
+[conda] mkl_fft                   1.3.1            py37hd3c417c_0  
+[conda] mkl_random                1.2.2            py37h51133e4_0  
+[conda] numpy                     1.21.5           py37h6c91a56_3  
+[conda] numpy-base                1.21.5           py37ha15fc14_3  
+[conda] pytorch                   1.7.1           py3.7_cuda11.0.221_cudnn8.0.5_0    pytorch
+[conda] torchvision               0.8.2                py37_cu110    pytorch
+        Pillow (9.3.0)
+
+Loading trainer: GeoKnowledgePrompting
+Loading dataset: DollarStreet
+Class ref name list
+['alarm clocks', 'alcoholic drinks', 'arm watches', 'armchairs', 'backs of a hand', 'beds', 'bikes', 'books', 'bowls/plates', 'car keys', 'cars', 'cattle', 'chickens', 'cigarettes', 'cleaning equipment', 'clothes', 'computers', 'contraceptives', 'cooking pots', 'cooking utensils', 'cosmetics', 'couches', 'cups/mugs/glasses', 'cutlery', 'diapers (or baby-pants)', 'dish racks', 'dish washing brushes/clothes', 'dish washing soap', 'dishwashers', 'earrings', 'family snapshots', 'freezers', 'front doors', 'frontdoor keys', 'frontdoor locks', 'fruit trees', 'fruits/vegetables', 'glasses/lenses', 'goats', 'grains', 'hair brushes/combs', 'homes', 'instruments', 'jewelry', 'kitchen sinks', 'light sources', 'makeup', 'meat/fish', 'medication', 'menstruation pads/tampax', 'mopeds/motorcycles', 'mosquito protections', 'music equipment', 'necklaces', 'ovens', 'palms of a hand', 'paper', 'pens/pencils', 'pet foods', 'pets', 'phones', 'piercings', 'power outlets', 'radios', 'refrigerators', 'roofs', 'rugs', 'salt', 'shampoo', 'shoes', 'showers', 'snacks', 'soap for hands and body', 'social drinks', 'spices', 'stoves/hobs', 'tables with food', 'tattoos', 'teeth', 'toilet paper', 'toilets', 'tools', 'toothbrushes', 'toothpaste', 'toys', 'trash/waste', 'tvs', 'wall clocks', 'wall decorations', 'wardrobes', 'washing detergent', 'waste dumps', 'water outlets/drains', 'wedding photos', 'wheelbarrows']
+pizza
+starting
+path_to_data
+in here
+parsed data
+Train Split: eu_train
+# Images in Test Split: 761
+Now creating shots
+Creating a 16-shot dataset
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed03d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc0d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78f90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80e50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589efb950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9ae90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f27910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8f090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e724d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eecb10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee97d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eecc10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e858d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed12d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e731d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b1d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f6f510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7cb10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed74d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ab90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ef90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c0d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80dd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edffd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edfb10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e779d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebefd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7e6d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a9d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6bd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78b90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9aa10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edcb50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b6d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8bc50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb48d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed11d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4bd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b2d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eeccd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecae10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7cc10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8f650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee56d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ab50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eca690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8dd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4dd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f6f4d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecca90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed2d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebbe50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecad50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f28850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecaa50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e721d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ad50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebee10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed7d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec88d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe1d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec52d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebbc50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e980d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eede50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edcad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec83d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f2f2d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ec90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebb490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73ed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6d10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c9d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8dd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb41d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80e10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f2f850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eca5d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebb290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e943d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebbcd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0f50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91f90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9b90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9aa90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f30590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed97d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed69d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6e90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81b90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7e390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f30fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99dd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7efd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec5d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8bf50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe3d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7d10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed9d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed90d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eca590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eded10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee11d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a6d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb62d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edff50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99b50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebb810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e888d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eccf50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e803d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c5d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edcc90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e996d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7cf90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef11d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edec90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8cf90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1e10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9ab50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec57d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f311d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecec90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9cb90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8cf10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebaf50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe2d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8cd10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1f90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e939d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1b50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4e90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4b90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb81d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebac90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec38d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e932d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edec50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73bd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8bd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8fad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eecb90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8ba50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebbad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb61d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e776d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebb9d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc3d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e940d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f313d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7f50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8f7d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7e550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed95d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8fb10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8bad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9b50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0d10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7cad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed51d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed92d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed71d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7cb90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e944d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5e50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7eb90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31e50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91dd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee91d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e917d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ab10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf3d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebb550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee14d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e883d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7eb10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c7d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9d10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecccd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5dd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9bd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef12d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb43d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe4d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4b90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eced10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5e90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee12d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e728d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c3d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed56d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c4d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecac10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f316d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece0d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e947d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a4d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8f50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7cc90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecead0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9e90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a8d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f318d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecced0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed78d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed59d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b4d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f0d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edcc10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebad90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b9d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ce10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a3d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7cd50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8bd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebec90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86f90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed8d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec39d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed72d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e720d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8f890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edcb90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed16d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9af10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e770d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0bd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebb790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebbed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec85d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eccb10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc9d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e911d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee86d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e804d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee90d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece5d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7e410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee10d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c6d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8fc90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb64d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed54d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e817d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31e10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e867d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80b50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a0d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee55d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8b90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88f50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9cad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94e90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9ad10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3dd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebbf50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebeed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebee50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eca9d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589f31f90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebbdd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8ff50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee18d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e850d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8f610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80f50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8b50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e855d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5e90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eecd10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec06d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1dd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec59d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edccd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4b90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9e50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee45d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecae50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e772d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5b90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93f50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a1d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1f50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9e10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc9d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e910d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe8d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed62d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec41d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece3d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb49d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec46d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee54d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e815d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ccd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9cd10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecafd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86d10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc1d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece8d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e862d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a3d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef18d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8cc90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e988d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e727d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebb110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98f90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece7d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecac50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eedd50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede8d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eccc50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8ce10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edfed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb47d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eedd10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72f50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8bed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec45d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81d10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98b90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ec10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf7d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec1d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed70d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e983d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8ed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec81d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed10d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e993d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebad50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0f90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed17d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9f50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eca790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e734d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed66d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed06d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0ed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e807d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edea90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eecf90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eca290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee92d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eeda50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebb0d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6b90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1ed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec00d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edced0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ececd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb4e10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba6d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecee10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edee10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8f910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c3d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9ed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9ac10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed02d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edebd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e885d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed1d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8fe50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9aed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebb510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8f950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e726d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed08d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7cfd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e930d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9ced0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8bfd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4ed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebaa10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e723d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86ed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ac90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb6b50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede4d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e736d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edfb50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8f110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecce10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8ba10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7e590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93d10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93e50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5e90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8fa10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edfe50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eecc90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8f150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ee10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebb310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8ca90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb85d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eca850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c9d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93b50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee49d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78bd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c8d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77e90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec6d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7aa10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73b90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e986d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede3d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8fd10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eceb50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4bd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9cc90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7e490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb80d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a9d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86e10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c0d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebea90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0b50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece4d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede7d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8cf50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98e10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb84d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eccd10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edeb50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73d10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1dd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb88d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba9d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8fc50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8e10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c6d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eca490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80f90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed04d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ea90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5b90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8ffd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80c50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80ed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f7d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1e90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9fa10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a5d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede2d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8f490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee53d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edfa90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88dd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebef50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecab90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8f990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ca90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebb8d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ead0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eb8e50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed77d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed50d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5ed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86b50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec58d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6ed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe6d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec86d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7af10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7cf10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e989d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec36d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec48d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed3d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1f50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eba950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eca750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec0e50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed13d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7e890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ece910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebbb50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7e710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a550>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebab90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebba50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec82d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73e10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8cfd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91b50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede5d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebec50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eecf10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee99d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e73690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85f90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7acd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eedf50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebafd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93bd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8cdd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebb710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e737d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eca250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edfbd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1e10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8f50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee52d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eca150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7cc50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e77490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee42d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e997d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99190>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc6d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94f50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebbfd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebed10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec03d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7a0d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eece50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7c590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec34d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee1cd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e806d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e913d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec3350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e732d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f4d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5e10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed67d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edee90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81b50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ebe110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9810>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed7710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6d90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed5b10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1e50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8bdd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ee50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed91d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8b390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93150>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec9d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7e790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c790>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec30d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5a50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4c10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed9110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ee90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec35d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed63d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7e1d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec42d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec4650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eca510>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eced90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edc650>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee59d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee8410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8fd90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e93ed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eedb10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5990>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eed350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef19d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecea90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e81ed0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec8250>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0e10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e91a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ec5610>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85210>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecaad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0950>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eec690>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eedc90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e85110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e86a10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88b50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98fd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e99110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9a710>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9c350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f1d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9f290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ecc050>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ede350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9390>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1890>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72e90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e78450>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e818d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88110>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e98ad0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9ad50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589eccd90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed1bd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edfdd0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee5c90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee98d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88f10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e94910>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9af90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed0a90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee4090>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee44d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ee9290>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1f90>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80850>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88590>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8c410>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ed6d10>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e7ec50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edead0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589edf6d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1d50>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e88750>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589ef1490>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e72350>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e80310>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e886d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e8f2d0>
+<dassl.data.datasets.base_dataset.Datum object at 0x7f5589e9fb10>
+Saving preprocessed few-shot data to /ihome/akovashka/krb115/projects/geo_knowledge_prompting_proj/GeoKnowledgePrompting/aux_data/dollarstreet/split_fewshot/eu_train_shot_16-seed_1.pkl
+End of Constructor
+Building transform_train
++ random resized crop (size=(224, 224))
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+Building transform_test
++ resize the smaller edge to 224
++ 224x224 center crop
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+Broccoli
+<torch.utils.data.dataloader.DataLoader object at 0x7f5589e3de90>
+Broccoli
+<torch.utils.data.dataloader.DataLoader object at 0x7f5589e3d7d0>
+Broccoli
+<torch.utils.data.dataloader.DataLoader object at 0x7f5589e3d110>
+***** Dataset statistics *****
+  Dataset: DollarStreet
+  # classes: 95
+  # train_x: 1,323
+  # val: 761
+  # test: 761
+Length of classnames
+95
+Loading CLIP (backbone: ViT-B/16)
+Building custom CLIP
+Initial context: "a photo of a"
+Number of context words (tokens): 4
+Generating default text features...
+Appending country name...
+We are using LLM-only, so default prompts will be ignored
+Path to country ensemble list: /ihome/akovashka/krb115/projects/geo_knowledge_prompting_proj/GeoKnowledgePrompting/country_lists/dollarstreet_americas_asia_africa.txt
+['Bangladesh', 'Bolivia', 'Brazil', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'China', 'Colombia', "Cote d'Ivoire", 'Egypt', 'Ethiopia', 'Ghana', 'Guatemala', 'Haiti', 'India', 'Indonesia', 'Iran', 'Jordan', 'Kazakhstan', 'Kenya', 'Kyrgyzstan', 'Lebanon', 'Liberia', 'Malawi', 'Mexico', 'Mongolia', 'Myanmar', 'Nepal', 'Nigeria', 'Pakistan', 'Palestine', 'Papua New Guinea', 'Peru', 'Philippines', 'Rwanda', 'Somalia', 'South Africa', 'South Korea', 'Sri Lanka', 'Tanzania', 'Thailand', 'Togo', 'Tunisia', 'Turkey', 'United States', 'Vietnam', 'Zimbabwe']
+49 countries
+Making default country ensemble...
+Bangladesh
+Bolivia
+Brazil
+Burkina Faso
+Burundi
+Cambodia
+Cameroon
+Canada
+China
+Colombia
+Cote d'Ivoire
+Egypt
+Ethiopia
+Ghana
+Guatemala
+Haiti
+India
+Indonesia
+Iran
+Jordan
+Kazakhstan
+Kenya
+Kyrgyzstan
+Lebanon
+Liberia
+Malawi
+Mexico
+Mongolia
+Myanmar
+Nepal
+Nigeria
+Pakistan
+Palestine
+Papua New Guinea
+Peru
+Philippines
+Rwanda
+Somalia
+South Africa
+South Korea
+Sri Lanka
+Tanzania
+Thailand
+Togo
+Tunisia
+Turkey
+United States
+Vietnam
+Zimbabwe
+Making prompts with LLM descriptors
+Prep single country descriptors
+	Country LLM descriptors being used: Japan
+Here are sample prompts, though we use ensemble:

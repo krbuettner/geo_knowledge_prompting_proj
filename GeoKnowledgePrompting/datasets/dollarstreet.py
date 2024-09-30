@@ -1,4 +1,4 @@
-# DollarStreet dataset script 
+# DollarStreet Dataset Script 
 
 from collections import OrderedDict
 import csv
@@ -16,29 +16,28 @@ import math
 @DATASET_REGISTRY.register()
 class DollarStreet(DatasetBase):
 
-	# Key path information
-	dataset_dir = "dollarstreet"
-
 	# Constructor
 	def __init__(self, cfg):
-		print(cfg.DATASET.ROOT)
-		root = os.path.abspath(os.path.expanduser(cfg.DATASET.ROOT))
-		self.dataset_dir = os.path.join(root, self.dataset_dir)
+			
+		# Aux data - holds files for DS; dataset dir holds images
+		self.aux_data_root = os.path.join(os.getcwd(), "aux_data/dollarstreet")
+		self.dataset_dir = os.path.join(os.getcwd(), "dollarstreet_data")
 
 		# Key files/folders in dataset dir
-		self.image_dir = os.path.join(self.dataset_dir, "images_resized")                              # Maybe change this eventually (higher-res)
-		self.preprocessed = os.path.join(self.dataset_dir, "preprocessed.pkl")
-		self.split_fewshot_dir = os.path.join(self.dataset_dir, "split_fewshot")
+		self.image_dir = self.dataset_dir                   
+		self.valid_image_set_dir = os.path.join(self.aux_data_root, "dollarstreet_img_set.pkl")
+		self.split_image_set_dir = os.path.join(self.aux_data_root,'split_all_data.pkl')
+		self.mapping_dir = os.path.join(self.aux_data_root, 'mapping_obj_classes_in_official_dollar_street.txt')
+		self.orig_obj_dir = os.path.join(self.aux_data_root, 'orig_obj_classes_in_official_dollar_street.txt')  
+		self.preprocessed = os.path.join(self.aux_data_root, "preprocessed.pkl")
+		self.split_fewshot_dir = os.path.join(self.aux_data_root, "split_fewshot")
 		mkdir_if_missing(self.split_fewshot_dir)
-		self.valid_image_set_dir = os.path.join(self.dataset_dir, "dollarstreet_img_set.pkl")
-		self.mapping_dir = os.path.join(self.dataset_dir, 'mapping_obj_classes_in_official_dollar_street.txt')
-		self.orig_obj_dir = os.path.join(self.dataset_dir, 'orig_obj_classes_in_official_dollar_street.txt')
-
+		
 		# Make dictionary_new_to_old classes (needed for parsing) 
+		with open(self.orig_obj_dir, 'r') as g:       # DS has its own categories - we modify list to merge/exclude some classes that are not fitting for obj rec
+			orig_cats = g.readlines()
 		with open(self.mapping_dir, 'r') as f:
 			new_cats = f.readlines()
-		with open(self.orig_obj_dir, 'r') as g:
-			orig_cats = g.readlines()
 		dictionary_old_to_new_classes = dict()
 		dictionary_new_to_old_classes = dict()
 		for x, y in zip(orig_cats, new_cats):
@@ -49,40 +48,35 @@ class DollarStreet(DatasetBase):
 
 		# Define DollarStreetDataset Loader - makes loading images easier 
 		dollarstreet_dataset = DollarStreetDataset(anno_dir=self.valid_image_set_dir, img_dir=self.image_dir, dictionary_old_to_new_classes=dictionary_old_to_new_classes)
-	
+
 		# Get object class names
-		with open(os.path.join(self.dataset_dir,'new_obj_classes_in_official_dollar_street.txt'), 'r') as f:
+		with open(os.path.join(self.aux_data_root,'new_obj_classes_in_official_dollar_street.txt'), 'r') as f:
 			self.class_ref_name_list = []
 			new_cats = f.readlines()
 			for n in new_cats:
 				self.class_ref_name_list.append(n.strip())
-		print('Class ref name list')
+		dollarstreet_classnames = self.class_ref_name_list
+		print('DollarStreet classes')
 		print(self.class_ref_name_list)
 
-		# Get GeoDe Class names
-		dollarstreet_classnames = []
-		with open(os.path.join(self.dataset_dir,'classnames.txt'), 'r') as f:
-			for l in f.readlines():
-				dollarstreet_classname = l.strip()
-				dollarstreet_classnames.append(dollarstreet_classname)
-		print('DollarStreet classnames')
-		print(dollarstreet_classnames)
-
 		# Load preprocessed train and test data 
-		if os.path.exists(os.path.join(self.dataset_dir, cfg.DATASET.TRAIN_SPLIT + "_" + cfg.DATASET.TEST_SPLIT + "_preprocessed.pkl")):
-			print(os.path.join(self.dataset_dir, cfg.DATASET.TRAIN_SPLIT + "_" + cfg.DATASET.TEST_SPLIT + "_preprocessed.pkl"))
-			with open(os.path.join(self.dataset_dir, cfg.DATASET.TRAIN_SPLIT + "_" + cfg.DATASET.TEST_SPLIT + "_preprocessed.pkl"), "rb") as f:
+		if os.path.exists(os.path.join(self.aux_data_root, cfg.DATASET.TRAIN_SPLIT + "_" + cfg.DATASET.TEST_SPLIT + "_preprocessed.pkl")):
+			print('Loading preprocessed data')
+			print(os.path.join(self.aux_data_root, cfg.DATASET.TRAIN_SPLIT + "_" + cfg.DATASET.TEST_SPLIT + "_preprocessed.pkl"))
+			with open(os.path.join(self.aux_data_root, cfg.DATASET.TRAIN_SPLIT + "_" + cfg.DATASET.TEST_SPLIT + "_preprocessed.pkl"), "rb") as f:
 				preprocessed = pickle.load(f)
 				train = preprocessed["train"]
 				test = preprocessed["test"]
+		# Make data if not preprocessed
 		else:
-
 			# Load data with all images
-			print(cfg.DATASET.ROOT)
-			with open(os.path.join(self.dataset_dir,'split_all_data_10_21_23.pkl'), 'rb') as f:
+			with open(self.split_image_set_dir, 'rb') as f:
 				all_data = pickle.load(f)
 
+			# Parse dataset info 
 			dictionary_of_data_info = self.dollarstreet_parse_train_val_test_data(dollarstreet_dataset=dollarstreet_dataset, split_data=all_data)
+
+			# Get subsets of parsed info 
 			all_train_img_path_to_label_dict = dictionary_of_data_info['train_img_path_to_label_dict'] 
 			all_val_img_path_to_label_dict = dictionary_of_data_info['val_img_path_to_label_dict']
 			all_test_img_path_to_label_dict = dictionary_of_data_info['test_img_path_to_label_dict'] 
@@ -95,8 +89,6 @@ class DollarStreet(DatasetBase):
 			all_by_econ_train_img_path_to_label_dict = dictionary_of_data_info['by_econ_train_img_path_to_label_dict']
 			all_by_econ_val_img_path_to_label_dict = dictionary_of_data_info['by_econ_val_img_path_to_label_dict']
 			all_by_econ_test_img_path_to_label_dict = dictionary_of_data_info['by_econ_test_img_path_to_label_dict'] 
-
-
 
 			print("Train Split: " + str(cfg.DATASET.TRAIN_SPLIT))
 			if cfg.DATASET.TRAIN_SPLIT == "am_eu_train": # 5467
@@ -111,8 +103,8 @@ class DollarStreet(DatasetBase):
 				train = all_by_region_train_img_path_to_label_dict["as"]
 			elif cfg.DATASET.TRAIN_SPLIT == "af_train": 
 				train = all_by_region_train_img_path_to_label_dict["af"]
-			#for im in train:
-			#	image, img_path, label, country, continent, index, econ = dollarstreet_dataset.__getitem_byid__(im.split('/')[-1][:-4])
+
+			print("Train Split: " + str(cfg.DATASET.TEST_SPLIT))
 			if cfg.DATASET.TEST_SPLIT == "am_eu_test":
 				test = {**all_by_region_test_img_path_to_label_dict["am"], **all_by_region_test_img_path_to_label_dict["eu"]}
 			elif cfg.DATASET.TEST_SPLIT == "am_as_af_test": 
@@ -129,7 +121,6 @@ class DollarStreet(DatasetBase):
 				test = all_by_region_test_img_path_to_label_dict["as"]
 			elif cfg.DATASET.TEST_SPLIT == "af_test": 
 				test = all_by_region_test_img_path_to_label_dict["af"]
-
 			elif cfg.DATASET.TEST_SPLIT == "bolivia_full":
 				test = {**all_by_country_train_img_path_to_label_dict["Bolivia"], **all_by_country_val_img_path_to_label_dict["Bolivia"], **all_by_country_test_img_path_to_label_dict["Bolivia"]}
 			elif cfg.DATASET.TEST_SPLIT == "brazil_full":
@@ -148,7 +139,6 @@ class DollarStreet(DatasetBase):
 				test = {**all_by_country_train_img_path_to_label_dict["Peru"], **all_by_country_val_img_path_to_label_dict["Peru"], **all_by_country_test_img_path_to_label_dict["Peru"]}
 			elif cfg.DATASET.TEST_SPLIT == "unitedstates_full":
 				test = {**all_by_country_train_img_path_to_label_dict["United States"], **all_by_country_val_img_path_to_label_dict["United States"], **all_by_country_test_img_path_to_label_dict["United States"]}
-
 			elif cfg.DATASET.TEST_SPLIT == "eu_as_af_full":
 				test_am = {**all_by_region_train_img_path_to_label_dict["eu"], **all_by_region_val_img_path_to_label_dict["eu"], **all_by_region_test_img_path_to_label_dict["eu"]}
 				test_as = {**all_by_region_train_img_path_to_label_dict["as"], **all_by_region_val_img_path_to_label_dict["as"], **all_by_region_test_img_path_to_label_dict["as"]}
@@ -180,34 +170,31 @@ class DollarStreet(DatasetBase):
 			else:
 				print("Dataset not supported")
 				exit()
+			print('# Images in Train Split: ' + str(len(train)))
 			print('# Images in Test Split: ' + str(len(test)))
-	
+
 			# Make datum list
 			train = self.read_data_dollarstreet(train, dollarstreet_classnames)
 			test = self.read_data_dollarstreet(test, dollarstreet_classnames)
 
+			# Cache preprocessing files
 			preprocessed = {"train": train, "test": test}
 			with open(os.path.join(self.dataset_dir, cfg.DATASET.TRAIN_SPLIT + "_" + cfg.DATASET.TEST_SPLIT + "_preprocessed.pkl"), 'wb') as f:
 				pickle.dump(preprocessed, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-
+		# Now with data splits loaded, create shots of dataset
 		print('Now creating shots')
 		num_shots = cfg.DATASET.NUM_SHOTS
 		if num_shots >= 1:
 			seed = cfg.SEED
-
 			preprocessed = os.path.join(self.split_fewshot_dir, cfg.DATASET.TRAIN_SPLIT + "_" + f"shot_{num_shots}-seed_{seed}.pkl")
-
 			if os.path.exists(preprocessed):
-				print(
-					f"Loading preprocessed few-shot data from {preprocessed}")
+				print(f"Loading preprocessed few-shot data from {preprocessed}")
 				with open(preprocessed, "rb") as file:
 					data = pickle.load(file)
 					train = data["train"]
 			else:
-			
-				train = self.generate_fewshot_dataset(train,
-													  num_shots=num_shots)
+				train = self.generate_fewshot_dataset(train,num_shots=num_shots)
 				for t in train:
 					print(t)
 				data = {"train": train}
@@ -215,14 +202,9 @@ class DollarStreet(DatasetBase):
 				with open(preprocessed, "wb") as file:
 					pickle.dump(data, file, protocol=pickle.HIGHEST_PROTOCOL)
 
-
-
 		# Subsample classes if needed
 		subsample = cfg.DATASET.SUBSAMPLE_CLASSES
-		train, test = OxfordPets.subsample_classes(train,
-												   test,
-												   subsample=subsample)
-
+		train, test = OxfordPets.subsample_classes(train,test, subsample=subsample)
 		super().__init__(train_x=train, val=test, test=test)
 
 		# This is necessary for cases where # classes changes 
@@ -234,6 +216,7 @@ class DollarStreet(DatasetBase):
 
 		print("End of Constructor")
 
+	# Load data into format for soft prompting 
 	def read_data_dollarstreet(self, dict_of_images, classnames):
 		items = []
 		for img_path in dict_of_images:
@@ -245,7 +228,9 @@ class DollarStreet(DatasetBase):
 			items.append(item)
 		return items
 
+	# Parse DollarStreet data file 
 	def dollarstreet_parse_train_val_test_data(self, dollarstreet_dataset, split_data):
+		print('Data processing (can take a minute)...')
 
 		dict_countries_to_continents = {'Burundi': 'af', 'Burkina Faso': 'af', 'India': 'as', 'Malawi': 'af', 'Tanzania': 'af', 'Somalia': 'af', 'Zimbabwe': 'af', 'Haiti': 'am', 'Nigeria': 'af', "Cote d'Ivoire": 'af', 'Togo': 'af', 'Myanmar': 'as', 'Papua New Guinea': 'as', 'Liberia': 'af', 'Rwanda': 'af', 'Cambodia': 'as', 'Bangladesh': 'as', 'Kenya': 'af', 'Peru': 'am', 'Nepal': 'as', 'Philippines': 'as', 'South Africa': 'af', 'Palestine': 'as', 'Tunisia': 'af', 'Indonesia': 'as', 'Colombia': 'am', 'China': 'as', 'Pakistan': 'as', 'Cameroon': 'af', 'Thailand': 'as', 'Bolivia': 'am', 'Serbia': 'eu', 'Ghana': 'af', 'Vietnam': 'as', 'Jordan': 'as', 'Guatemala': 'am', 'Brazil': 'am', 'Ethiopia': 'af', 'Mongolia': 'as', 'Ukraine': 'eu', 'United States': 'am', 'South Korea': 'as', 'Egypt': 'af', 'France': 'eu', 'Kyrgyzstan': 'as', 'Lebanon': 'as', 'Kazakhstan': 'as', 'Mexico': 'am', 'Sri Lanka': 'as', 'Netherlands': 'eu', 'Russia': 'eu', 'Austria': 'eu', 'Iran': 'as', 'Sweden': 'eu', 'United Kingdom': 'eu', 'Romania': 'eu', 'Switzerland': 'eu', 'Spain': 'eu', 'Czech Republic': 'eu', 'Turkey': 'eu', 'Canada': 'am', 'Italy': 'eu', 'Denmark': 'eu'}
 
@@ -262,7 +247,7 @@ class DollarStreet(DatasetBase):
 		by_econ_val_img_path_to_label_dict = dict()
 		by_econ_test_img_path_to_label_dict = dict()
 
-		for item in split_data['train']:
+		for i, item in enumerate(split_data['train']):
 			curr_id = item[0]
 			image, img_path, label, country, continent, index, econ = dollarstreet_dataset.__getitem_byid__(curr_id)
 			train_img_path_to_label_dict[img_path] = label
@@ -277,7 +262,7 @@ class DollarStreet(DatasetBase):
 			if continent != 'eu':
 				by_econ_train_img_path_to_label_dict[econ][img_path] = label
 		
-		for item in split_data['val']:
+		for i, item in enumerate(split_data['val']):
 			curr_id = item[0]
 			image, img_path, label, country, continent, index, econ = dollarstreet_dataset.__getitem_byid__(curr_id)
 			val_img_path_to_label_dict[img_path] = label
@@ -292,7 +277,7 @@ class DollarStreet(DatasetBase):
 			if continent != 'eu':
 				by_econ_val_img_path_to_label_dict[econ][img_path] = label
 
-		for item in split_data['test']:
+		for i, item in enumerate(split_data['test']):
 			curr_id = item[0]
 			image, img_path, label, country, continent, index, econ = dollarstreet_dataset.__getitem_byid__(curr_id)
 			test_img_path_to_label_dict[img_path] = label
@@ -321,7 +306,6 @@ class DollarStreet(DatasetBase):
 		dict_to_return['by_econ_val_img_path_to_label_dict'] = by_econ_val_img_path_to_label_dict
 		dict_to_return['by_econ_test_img_path_to_label_dict'] = by_econ_test_img_path_to_label_dict
 
-
 		return dict_to_return
 
 
@@ -347,7 +331,6 @@ class DollarStreetDataset(Dataset):
 		self.continent_list = []
 		self.country_to_continent_dict = dict()
 		dict_id_to_string = {1: "low", 2: "medium", 3: "high"}
-
 
 		# This will hold a dictionary mapping an integer to image information 
 		self.img_labels = dict()
