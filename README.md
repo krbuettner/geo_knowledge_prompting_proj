@@ -10,7 +10,7 @@
 
 ## Env setup
 
-Follow the instructions in ```GeoKnowledgePrompting``` to create a conda environment/build relevant code. 
+Follow the ```How to Install``` section instructions in ```GeoKnowledgePrompting``` to create a conda environment/build relevant code. 
 
 ## Data processing
 
