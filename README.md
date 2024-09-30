@@ -29,7 +29,7 @@ We encourage future work that evaluates more modern LLMs with respect to robustn
 
 ## Running code
 
-Navigate to scripts for executable scripts to run training. For example:
+Navigate to ```GeoKnowledgePrompting/scripts``` for executable scripts to run training. For example:
 
 ```
 bash all_train_vitb16_geoknowledgeprompting.sh tgt_llm_and_in_country_ensemble_dollarstreet 4.0
